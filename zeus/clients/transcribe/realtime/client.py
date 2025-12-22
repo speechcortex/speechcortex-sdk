@@ -67,7 +67,6 @@ class RealtimeClient:
 
     def _emit(self, event: LiveTranscriptionEvents, *args, **kwargs) -> None:
         """Emit an event to all registered handlers"""
-        self._logger.debug("emitting event: %s", event)
         for handler in self._event_handlers[event]:
             try:
                 handler(self, *args, **kwargs)
@@ -193,8 +192,6 @@ class RealtimeClient:
             data = json.loads(message)
             response_type = data.get("type")
             
-            self._logger.debug("Received message type: %s", response_type)
-
             if response_type == "Results":
                 result = LiveResultResponse.from_json(message)
                 self._emit(LiveTranscriptionEvents.Transcript, result=result)

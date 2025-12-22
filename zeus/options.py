@@ -47,6 +47,7 @@ class ZeusClientOptions:  # pylint: disable=too-many-instance-attributes
     ):
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
+        self._logger.setLevel(verbose)
 
         if api_key is None:
             api_key = ""

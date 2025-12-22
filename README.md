@@ -25,6 +25,11 @@ Official Python SDK for Zeus ASR (Automatic Speech Recognition) platform.
 pip install "git+https://github.com/skanda-observeai/zeus-sdk-py.git@package_init"
 ```
 
+```bash
+export ZEUS_API_KEY=XXXXXXXXX
+export ZEUS_HOST=wss://rt-zeus-mldev.internalobserve.com
+```
+
 ## Quick Start
 
 ### Real-time Transcription
