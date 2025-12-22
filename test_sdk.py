@@ -59,7 +59,7 @@ except Exception as e:
 print("\n5. Testing LiveOptions...")
 try:
     options = LiveOptions(
-        model="nova-2",
+        model="zeus-v1",
         language="en-US",
         smart_format=True,
         interim_results=True,

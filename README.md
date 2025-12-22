@@ -22,7 +22,7 @@ Official Python SDK for Zeus ASR (Automatic Speech Recognition) platform.
 ## Installation
 
 ```bash
-pip install zeus-sdk
+pip install "git+https://github.com/skanda-observeai/zeus-sdk-py.git@package_init"
 ```
 
 ## Quick Start
@@ -55,7 +55,7 @@ connection.on(LiveTranscriptionEvents.Error, on_error)
 
 # Configure options
 options = LiveOptions(
-    model="nova-2",
+    model="zeus-v1",
     language="en-US",
     smart_format=True,
 )
@@ -82,7 +82,7 @@ connection = zeus.listen.websocket.v("1")
 connection.on(LiveTranscriptionEvents.Transcript, on_message)
 
 # Start connection
-options = LiveOptions(model="nova-2", smart_format=True)
+options = LiveOptions(model="zeus-v1", smart_format=True)
 connection.start(options)
 
 # Use microphone helper
@@ -128,7 +128,7 @@ zeus = ZeusClient(config=config)
 
 ### Real-time Transcription Options
 
-- `model`: ASR model to use (e.g., "nova-2")
+- `model`: ASR model to use (e.g., "zeus-v1")
 - `language`: Language code (e.g., "en-US")
 - `smart_format`: Enable smart formatting
 - `punctuate`: Enable punctuation
