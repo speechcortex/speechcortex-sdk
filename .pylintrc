@@ -1,0 +1,81 @@
+[MASTER]
+# Python code to execute, usually for sys.path manipulation
+init-hook='import sys; sys.path.append(".")'
+
+# Use multiple processes to speed up Pylint
+jobs=1
+
+# Allow loading of arbitrary C extensions
+unsafe-load-any-extension=no
+
+[MESSAGES CONTROL]
+# Disable specific warnings
+disable=C0111,  # missing-docstring
+        C0103,  # invalid-name
+        R0913,  # too-many-arguments
+        R0914,  # too-many-locals
+        R0915,  # too-many-statements
+        R0902,  # too-many-instance-attributes
+        R0801,  # duplicate-code
+        W0212,  # protected-access
+        W0703,  # broad-except
+        E1101,  # no-member
+
+[REPORTS]
+# Set the output format
+output-format=text
+
+# Tells whether to display a full report or only the messages
+reports=no
+
+[BASIC]
+# Good variable names
+good-names=i,j,k,ex,_,id
+
+# Regular expression matching correct function names
+function-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression matching correct method names
+method-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression matching correct constant names
+const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__))$
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=100
+
+# Maximum number of lines in a module
+max-module-lines=1000
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=10
+
+# Maximum number of locals for function / method body
+max-locals=25
+
+# Maximum number of return / yield for function / method body
+max-returns=6
+
+# Maximum number of branch for function / method body
+max-branches=20
+
+# Maximum number of statements in function / method body
+max-statements=75
+
+# Maximum number of parents for a class
+max-parents=10
+
+# Maximum number of attributes for a class
+max-attributes=15
+
+# Minimum number of public methods for a class
+min-public-methods=0
+
+# Maximum number of public methods for a class
+max-public-methods=25
+
+[IMPORTS]
+# Deprecated modules which should not be used
+deprecated-modules=regsub,TERMIOS,Bastion,rexec

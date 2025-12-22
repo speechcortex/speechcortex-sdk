@@ -1,0 +1,102 @@
+######
+# general configuration
+######
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zeus-sdk"
+version = "0.1.0"
+description = "The official Python SDK for Zeus ASR platform."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Zeus Team", email = "team@zeus.com"}
+]
+keywords = ["zeus", "asr", "speech-to-text", "speech recognition"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "httpx>=0.25.2",
+    "websockets>=12.0",
+    "dataclasses-json>=0.6.3",
+    "typing-extensions>=4.9.0",
+    "aiohttp>=3.9.1",
+    "aiofiles>=23.2.1",
+    "aenum>=3.1.0",
+    "deprecation>=2.1.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/skanda-observeai/zeus-sdk-py"
+"Bug Tracker" = "https://github.com/skanda-observeai/zeus-sdk-py/issues"
+"Source Code" = "https://github.com/skanda-observeai/zeus-sdk-py"
+"Documentation" = "https://github.com/skanda-observeai/zeus-sdk-py#readme"
+
+######
+# poetry configuration (optional)
+######
+[tool.poetry]
+name = "zeus-sdk"
+version = "0.1.0"
+description = "The official Python SDK for Zeus ASR platform."
+authors = ["Zeus Team <team@zeus.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+httpx = "^0.25.2"
+websockets = ">=12.0"
+typing-extensions = "^4.9.0"
+dataclasses-json = "^0.6.3"
+aiohttp = "^3.9.1"
+aiofiles = "^23.2.1"
+aenum = "^3.1.0"
+deprecation = "^2.1.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0"
+pylint = "^3.0"
+mypy = "^1.0"
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+types-aiofiles = "^23.2.0"
+
+######
+# black configuration
+######
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+
+######
+# mypy configuration
+######
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+######
+# pytest configuration
+######
+[tool.pytest.ini_options]
+minversion = "7.0"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
