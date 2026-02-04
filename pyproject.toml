@@ -6,16 +6,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "zeus-sdk"
+name = "speechcortex-sdk"
 version = "0.1.0"
-description = "The official Python SDK for Zeus ASR platform."
+description = "The official Python SDK for SpeechCortex ASR platform."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Zeus Team", email = "team@zeus.com"}
+    {name = "SpeechCortex Team", email = "team@speechcortex.com"}
 ]
-keywords = ["zeus", "asr", "speech-to-text", "speech recognition"]
+keywords = ["speechcortex", "asr", "speech-to-text", "speech recognition"]
 classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -36,19 +36,19 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/skanda-observeai/zeus-sdk-py"
-"Bug Tracker" = "https://github.com/skanda-observeai/zeus-sdk-py/issues"
-"Source Code" = "https://github.com/skanda-observeai/zeus-sdk-py"
-"Documentation" = "https://github.com/skanda-observeai/zeus-sdk-py#readme"
+"Homepage" = "https://github.com/skanda-observeai/speechcortex-sdk-py"
+"Bug Tracker" = "https://github.com/skanda-observeai/speechcortex-sdk-py/issues"
+"Source Code" = "https://github.com/skanda-observeai/speechcortex-sdk-py"
+"Documentation" = "https://github.com/skanda-observeai/speechcortex-sdk-py#readme"
 
 ######
 # poetry configuration (optional)
 ######
 [tool.poetry]
-name = "zeus-sdk"
+name = "speechcortex-sdk"
 version = "0.1.0"
-description = "The official Python SDK for Zeus ASR platform."
-authors = ["Zeus Team <team@zeus.com>"]
+description = "The official Python SDK for SpeechCortex ASR platform."
+authors = ["SpeechCortex Team <team@speechcortex.com>"]
 license = "MIT"
 readme = "README.md"
 

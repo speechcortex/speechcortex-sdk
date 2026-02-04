@@ -10,7 +10,7 @@ We release patches for security vulnerabilities in the following versions:
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Zeus SDK, please send an email to team@zeus.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within SpeechCortex SDK, please send an email to team@speechcortex.com. All security vulnerabilities will be promptly addressed.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
@@ -33,11 +33,11 @@ When reporting a vulnerability, please include:
 
 ## Security Best Practices
 
-When using Zeus SDK:
+When using SpeechCortex SDK:
 
 1. **Never commit API keys**: Store API keys in environment variables or secure vaults
-2. **Use HTTPS**: Always use secure connections when communicating with Zeus API
-3. **Keep dependencies updated**: Regularly update Zeus SDK and its dependencies
+2. **Use HTTPS**: Always use secure connections when communicating with SpeechCortex API
+3. **Keep dependencies updated**: Regularly update SpeechCortex SDK and its dependencies
 4. **Validate input**: Always validate and sanitize user input before processing
 5. **Error handling**: Implement proper error handling to avoid exposing sensitive information
 

@@ -10,8 +10,8 @@ import os
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
-from zeus import (
-    ZeusClient,
+from speechcortex import (
+    SpeechCortexClient,
     RealtimeOptions,
     TranscriptionEvents,
 )
@@ -19,12 +19,12 @@ from zeus import (
 
 def test_client_api():
     """Test that the new API structure is accessible"""
-    print("Testing Zeus SDK refactored API...\n")
+    print("Testing SpeechCortex SDK refactored API...\n")
     
     # Test 1: Client initialization
     print("✓ Test 1: Client initialization")
     try:
-        client = ZeusClient()
+        client = SpeechCortexClient()
         print("  Client created successfully")
     except Exception as e:
         print(f"  ❌ Failed: {e}")

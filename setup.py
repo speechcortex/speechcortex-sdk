@@ -1,4 +1,4 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -11,18 +11,18 @@ if sys.version_info < (3, 10):
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
-DESCRIPTION = "The official Python SDK for Zeus ASR platform."
+DESCRIPTION = "The official Python SDK for SpeechCortex ASR platform."
 
 setup(
-    name="zeus-sdk",
+    name="speechcortex-sdk",
     version="0.1.0",
-    author="Zeus Team",
-    author_email="team@zeus.com",
-    url="https://github.com/skanda-observeai/zeus-sdk-py",
+    author="SpeechCortex Team",
+    author_email="team@speechcortex.com",
+    url="https://github.com/skanda-observeai/speechcortex-sdk-py",
     project_urls={
-        "Bug Tracker": "https://github.com/skanda-observeai/zeus-sdk-py/issues",
-        "Source Code": "https://github.com/skanda-observeai/zeus-sdk-py",
-        "Documentation": "https://github.com/skanda-observeai/zeus-sdk-py#readme",
+        "Bug Tracker": "https://github.com/skanda-observeai/speechcortex-sdk-py/issues",
+        "Source Code": "https://github.com/skanda-observeai/speechcortex-sdk-py",
+        "Documentation": "https://github.com/skanda-observeai/speechcortex-sdk-py#readme",
     },
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
@@ -39,7 +39,7 @@ setup(
         "aenum>=3.1.0",
         "deprecation>=2.1.0",
     ],
-    keywords=["zeus", "asr", "speech-to-text", "speech recognition"],
+    keywords=["speechcortex", "asr", "speech-to-text", "speech recognition"],
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",

@@ -1,12 +1,12 @@
-# Zeus Python SDK
+# SpeechCortex Python SDK
 
-[![CI](https://github.com/skanda-observeai/zeus-sdk-py/actions/workflows/ci.yml/badge.svg)](https://github.com/skanda-observeai/zeus-sdk-py/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/zeus-sdk.svg)](https://badge.fury.io/py/zeus-sdk)
-[![Python Versions](https://img.shields.io/pypi/pyversions/zeus-sdk.svg)](https://pypi.org/project/zeus-sdk/)
+[![CI](https://github.com/skanda-observeai/speechcortex-sdk-py/actions/workflows/ci.yml/badge.svg)](https://github.com/skanda-observeai/speechcortex-sdk-py/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/speechcortex-sdk.svg)](https://badge.fury.io/py/speechcortex-sdk)
+[![Python Versions](https://img.shields.io/pypi/pyversions/speechcortex-sdk.svg)](https://pypi.org/project/speechcortex-sdk/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Official Python SDK for Zeus ASR (Automatic Speech Recognition) platform.
+Official Python SDK for SpeechCortex ASR (Automatic Speech Recognition) platform.
 
 ## Features
 
@@ -22,12 +22,12 @@ Official Python SDK for Zeus ASR (Automatic Speech Recognition) platform.
 ## Installation
 
 ```bash
-pip install "git+https://github.com/skanda-observeai/zeus-sdk-py.git@package_init"
+pip install "git+https://github.com/skanda-observeai/speechcortex-sdk-py.git@package_init"
 ```
 
 ```bash
-export ZEUS_API_KEY=XXXXXXXXX
-export ZEUS_HOST=wss://rt-zeus-mldev.internalobserve.com
+export SPEECHCORTEX_API_KEY=XXXXXXXXX
+export SPEECHCORTEX_HOST=wss://rt-zeus-mldev.internalobserve.com
 ```
 
 ## Quick Start
@@ -35,13 +35,13 @@ export ZEUS_HOST=wss://rt-zeus-mldev.internalobserve.com
 ### Real-time Transcription
 
 ```python
-from zeus import ZeusClient, LiveTranscriptionEvents, LiveOptions
+from speechcortex import SpeechCortexClient, LiveTranscriptionEvents, LiveOptions
 
 # Initialize the client
-zeus = ZeusClient(api_key="your_api_key_here")
+speechcortex = SpeechCortexClient(api_key="your_api_key_here")
 
 # Get WebSocket connection
-connection = zeus.listen.websocket.v("1")
+connection = speechcortex.listen.websocket.v("1")
 
 # Set up event handlers
 def on_message(self, result, **kwargs):
@@ -78,10 +78,10 @@ connection.finish()
 ### Using with Microphone
 
 ```python
-from zeus import ZeusClient, LiveTranscriptionEvents, LiveOptions, Microphone
+from speechcortex import SpeechCortexClient, LiveTranscriptionEvents, LiveOptions, Microphone
 
-zeus = ZeusClient()
-connection = zeus.listen.websocket.v("1")
+speechcortex = SpeechCortexClient()
+connection = speechcortex.listen.websocket.v("1")
 
 # Set up event handlers...
 connection.on(LiveTranscriptionEvents.Transcript, on_message)
@@ -108,25 +108,25 @@ connection.finish()
 Set your API key via environment variable:
 
 ```bash
-export ZEUS_API_KEY=your_api_key_here
+export SPEECHCORTEX_API_KEY=your_api_key_here
 ```
 
 Or pass it directly:
 
 ```python
-zeus = ZeusClient(api_key="your_api_key_here")
+speechcortex = SpeechCortexClient(api_key="your_api_key_here")
 ```
 
 ### Custom Endpoints
 
 ```python
-from zeus import ZeusClient, ZeusClientOptions
+from speechcortex import SpeechCortexClient, SpeechCortexClientOptions
 
-config = ZeusClientOptions(
+config = SpeechCortexClientOptions(
     api_key="your_api_key",
-    url="https://custom-api.zeus.com"
+    url="https://custom-api.speechcortex.com"
 )
-zeus = ZeusClient(config=config)
+speechcortex = SpeechCortexClient(config=config)
 ```
 
 ## Features
@@ -158,8 +158,8 @@ zeus = ZeusClient(config=config)
 
 ```bash
 # Clone the repository
-git clone https://github.com/zeus/zeus-sdk.git
-cd zeus-sdk
+git clone https://github.com/speechcortex/speechcortex-sdk.git
+cd speechcortex-sdk
 
 # Install dependencies
 pip install -r requirements-dev.txt
@@ -168,10 +168,10 @@ pip install -r requirements-dev.txt
 pytest
 
 # Run linting
-pylint zeus/
+pylint speechcortex/
 
 # Format code
-black zeus/
+black speechcortex/
 ```
 
 ## License
@@ -180,4 +180,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Support
 
-For issues, questions, or contributions, please visit our [GitHub repository](https://github.com/zeus/zeus-sdk).
+For issues, questions, or contributions, please visit our [GitHub repository](https://github.com/speechcortex/speechcortex-sdk).

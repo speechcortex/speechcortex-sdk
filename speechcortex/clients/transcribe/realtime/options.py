@@ -1,4 +1,4 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -12,7 +12,7 @@ class RealtimeOptions:
     Options for configuring live transcription via WebSocket.
     
     Attributes:
-        model: The Zeus model to use (e.g., "zeus-v1")
+        model: The model to use (e.g., "zeus-v1")
         language: Language code (e.g., "en-US")
         smart_format: Enable smart formatting
         punctuate: Enable punctuation

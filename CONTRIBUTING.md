@@ -1,6 +1,6 @@
-# Contributing to Zeus Python SDK
+# Contributing to SpeechCortex Python SDK
 
-First off, thank you for considering contributing to Zeus Python SDK! It's people like you that make Zeus SDK such a great tool.
+First off, thank you for considering contributing to SpeechCortex Python SDK! It's people like you that make SpeechCortex SDK such a great tool.
 
 ## Code of Conduct
 
@@ -49,8 +49,8 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/zeus-sdk-py.git
-cd zeus-sdk-py
+git clone https://github.com/YOUR_USERNAME/speechcortex-sdk-py.git
+cd speechcortex-sdk-py
 
 # Create a virtual environment
 python -m venv venv
@@ -93,7 +93,7 @@ def transcribe_audio(
         Dictionary containing transcription results
 
     Raises:
-        ZeusError: If transcription fails
+        SpeechCortexError: If transcription fails
     """
     pass
 ```
@@ -110,7 +110,7 @@ def transcribe_audio(
 pytest
 
 # Run with coverage
-pytest --cov=zeus --cov-report=html
+pytest --cov=speechcortex --cov-report=html
 
 # Run specific test file
 pytest tests/test_client.py
@@ -123,7 +123,7 @@ pytest tests/test_client.py
 
 ```bash
 # Run mypy
-mypy zeus/
+mypy speechcortex/
 ```
 
 ### Linting
@@ -132,14 +132,14 @@ mypy zeus/
 
 ```bash
 # Run pylint
-pylint zeus/
+pylint speechcortex/
 ```
 
 ## Project Structure
 
 ```
-zeus-sdk-py/
-├── zeus/                  # Main package
+speechcortex-sdk-py/
+├── speechcortex/                  # Main package
 │   ├── __init__.py       # Package initialization
 │   ├── client.py         # Main client implementation
 │   ├── errors.py         # Error classes
@@ -171,7 +171,7 @@ Remove deprecated API endpoints
 
 Releases are handled by maintainers:
 
-1. Update version in `zeus/__init__.py`, `setup.py`, and `pyproject.toml`
+1. Update version in `speechcortex/__init__.py`, `setup.py`, and `pyproject.toml`
 2. Update `CHANGELOG.md` with release notes
 3. Create a git tag: `git tag -a v0.1.0 -m "Release v0.1.0"`
 4. Push tag: `git push origin v0.1.0`

@@ -1,4 +1,4 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -7,7 +7,7 @@ from aenum import StrEnum
 
 class LiveTranscriptionEvents(StrEnum):
     """
-    Enumerates the possible events that can be received from the Zeus API
+    Enumerates the possible events that can be received from the SpeechCortex API
     """
 
     Open: str = "Open"

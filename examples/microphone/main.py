@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 """
-Real-time speech transcription from microphone using Zeus SDK.
+Real-time speech transcription from microphone using SpeechCortex SDK.
 
 This example demonstrates:
-1. Connecting to Zeus WebSocket API
+1. Connecting to SpeechCortex WebSocket API
 2. Streaming audio from microphone
 3. Receiving real-time transcription results
 4. Handling different event types
@@ -20,8 +20,8 @@ import sys
 # Add parent directory to path for local development
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from zeus import (
-    ZeusClient,
+from speechcortex import (
+    SpeechCortexClient,
     TranscriptionEvents,
     RealtimeOptions,
     Microphone,
@@ -33,13 +33,13 @@ is_finals = []
 
 def main():
     try:
-        # Initialize Zeus client
-        # API key can be set via ZEUS_API_KEY environment variable
-        # or passed directly: ZeusClient(api_key="your_key")
-        zeus = ZeusClient()
+        # Initialize SpeechCortex client
+        # API key can be set via SPEECHCORTEX_API_KEY environment variable
+        # or passed directly: SpeechCortexClient(api_key="your_key")
+        speechcortex = SpeechCortexClient()
 
         # Get real-time transcription connection
-        connection = zeus.transcribe.realtime()
+        connection = speechcortex.transcribe.realtime()
 
         # Define event handlers
         def on_open(self, open, **kwargs):
@@ -110,7 +110,7 @@ def main():
             vad_events=True,    # Enable voice activity detection events
         )
 
-        print("Starting Zeus real-time transcription...")
+        print("Starting SpeechCortex real-time transcription...")
         print("Speak into your microphone. Press Ctrl+C to stop.\n")
 
         # Start the WebSocket connection

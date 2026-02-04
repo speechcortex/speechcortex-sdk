@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 """
-Simple test to verify Zeus SDK installation and basic functionality.
+Simple test to verify SpeechCortex SDK installation and basic functionality.
 """
 
 import sys
@@ -13,14 +13,14 @@ import os
 # Add parent directory to path for local development
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-print("Testing Zeus SDK...")
+print("Testing SpeechCortex SDK...")
 print("-" * 50)
 
 # Test 1: Import the SDK
 print("\n1. Testing imports...")
 try:
-    from zeus import ZeusClient, LiveOptions, LiveTranscriptionEvents
-    print("✓ Successfully imported zeus package")
+    from speechcortex import SpeechCortexClient, LiveOptions, LiveTranscriptionEvents
+    print("✓ Successfully imported speechcortex package")
 except Exception as e:
     print(f"✗ Failed to import: {e}")
     sys.exit(1)
@@ -28,8 +28,8 @@ except Exception as e:
 # Test 2: Check version
 print("\n2. Checking version...")
 try:
-    import zeus
-    print(f"✓ Zeus SDK version: {zeus.__version__}")
+    import speechcortex
+    print(f"✓ SpeechCortex SDK version: {speechcortex.__version__}")
 except Exception as e:
     print(f"✗ Failed to get version: {e}")
 
@@ -37,8 +37,8 @@ except Exception as e:
 print("\n3. Testing client initialization...")
 try:
     # Test with dummy API key
-    client = ZeusClient(api_key="test_key_12345")
-    print("✓ Successfully initialized ZeusClient")
+    client = SpeechCortexClient(api_key="test_key_12345")
+    print("✓ Successfully initialized SpeechCortexClient")
     print(f"   API URL: {client._config.url}")
     print(f"   Headers: {client._config.headers}")
 except Exception as e:
@@ -85,7 +85,7 @@ except Exception as e:
 # Test 7: Check Microphone import
 print("\n7. Testing Microphone import...")
 try:
-    from zeus import Microphone
+    from speechcortex import Microphone
     print("✓ Microphone class imported successfully")
     print("   Note: pyaudio must be installed to use Microphone")
 except Exception as e:
@@ -95,7 +95,7 @@ except Exception as e:
 print("\n" + "-" * 50)
 print("✓ All core tests passed!")
 print("\nNext steps:")
-print("1. Set your API key: export ZEUS_API_KEY=your_actual_key")
+print("1. Set your API key: export SPEECHCORTEX_API_KEY=your_actual_key")
 print("2. Update the API URL in .env or code if needed")
 print("3. Run the microphone example: python examples/microphone/main.py")
 print("4. For microphone example, install: pip install pyaudio python-dotenv")

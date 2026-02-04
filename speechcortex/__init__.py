@@ -1,31 +1,31 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 """
-Zeus Python SDK
+SpeechCortex Python SDK
 
-Official Python SDK for Zeus ASR (Automatic Speech Recognition) platform.
+Official Python SDK for SpeechCortex ASR (Automatic Speech Recognition) platform.
 """
 
 __version__ = "0.1.0"
 
 # Core client
-from .client import ZeusClient, Zeus, TranscribeRouter
-from .options import ZeusClientOptions, ClientOptionsFromEnv
+from .client import SpeechCortexClient, SpeechCortex, TranscribeRouter
+from .options import SpeechCortexClientOptions
 
 # Errors
 from .errors import (
     WebSocketStatusCode,
-    ZeusError,
-    ZeusTypeError,
-    ZeusModuleError,
-    ZeusApiError,
-    ZeusUnknownApiError,
-    ZeusApiKeyError,
-    ZeusConnectionError,
-    ZeusTimeoutError,
-    ZeusWebSocketError,
+    SpeechCortexError,
+    SpeechCortexTypeError,
+    SpeechCortexModuleError,
+    SpeechCortexApiError,
+    SpeechCortexUnknownApiError,
+    SpeechCortexApiKeyError,
+    SpeechCortexConnectionError,
+    SpeechCortexTimeoutError,
+    SpeechCortexWebSocketError,
 )
 
 # Transcribe client and options
@@ -49,7 +49,7 @@ from .clients.transcribe import (
 )
 
 # Audio utilities
-from .audio import Microphone, ZeusMicrophoneError
+from .audio import Microphone, SpeechCortexMicrophoneError
 
 # Logging
 from .utils import (
@@ -71,23 +71,22 @@ __all__ = [
     # Version
     "__version__",
     # Client
-    "ZeusClient",
-    "Zeus",
+    "SpeechCortexClient",
+    "SpeechCortex",
     "TranscribeRouter",
     # Options
-    "ZeusClientOptions",
-    "ClientOptionsFromEnv",
+    "SpeechCortexClientOptions",
     # Errors
     "WebSocketStatusCode",
-    "ZeusError",
-    "ZeusTypeError",
-    "ZeusModuleError",
-    "ZeusApiError",
-    "ZeusUnknownApiError",
-    "ZeusApiKeyError",
-    "ZeusConnectionError",
-    "ZeusTimeoutError",
-    "ZeusWebSocketError",
+    "SpeechCortexError",
+    "SpeechCortexTypeError",
+    "SpeechCortexModuleError",
+    "SpeechCortexApiError",
+    "SpeechCortexUnknownApiError",
+    "SpeechCortexApiKeyError",
+    "SpeechCortexConnectionError",
+    "SpeechCortexTimeoutError",
+    "SpeechCortexWebSocketError",
     # Transcribe
     "RealtimeClient",
     "RealtimeOptions",
@@ -108,7 +107,7 @@ __all__ = [
     "Word",
     # Audio
     "Microphone",
-    "ZeusMicrophoneError",
+    "SpeechCortexMicrophoneError",
     # Logging
     "VerboseLogger",
     "NOTICE",

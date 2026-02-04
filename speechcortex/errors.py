@@ -1,11 +1,11 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 """
-Zeus SDK Errors Module
+SpeechCortex SDK Errors Module
 
-This module contains all custom exceptions used throughout the Zeus SDK.
+This module contains all custom exceptions used throughout the SpeechCortex SDK.
 """
 
 from enum import IntEnum
@@ -95,9 +95,9 @@ class WebSocketStatusCode(IntEnum):
         return code == 1000
 
 
-class ZeusError(Exception):
+class SpeechCortexError(Exception):
     """
-    Base exception for all Zeus SDK errors.
+    Base exception for all SpeechCortex SDK errors.
     """
 
     def __init__(self, message: str):
@@ -105,16 +105,16 @@ class ZeusError(Exception):
         self.message = message
 
 
-class ZeusTypeError(ZeusError):
+class SpeechCortexTypeError(SpeechCortexError):
     """
-    Exception raised for type-related errors in the Zeus SDK.
+    Exception raised for type-related errors in the SpeechCortex SDK.
     """
 
     def __init__(self, message: str):
         super().__init__(message)
 
 
-class ZeusModuleError(ZeusError):
+class SpeechCortexModuleError(SpeechCortexError):
     """
     Exception raised when a required module is not available.
     """
@@ -123,9 +123,9 @@ class ZeusModuleError(ZeusError):
         super().__init__(message)
 
 
-class ZeusApiError(ZeusError):
+class SpeechCortexApiError(SpeechCortexError):
     """
-    Exception raised when the Zeus API returns an error.
+    Exception raised when the SpeechCortex API returns an error.
     """
 
     def __init__(self, message: str, status: int = None):
@@ -133,7 +133,7 @@ class ZeusApiError(ZeusError):
         self.status = status
 
 
-class ZeusUnknownApiError(ZeusApiError):
+class SpeechCortexUnknownApiError(SpeechCortexApiError):
     """
     Exception raised when an unknown API error occurs.
     """
@@ -142,7 +142,7 @@ class ZeusUnknownApiError(ZeusApiError):
         super().__init__(message, status)
 
 
-class ZeusApiKeyError(ZeusError):
+class SpeechCortexApiKeyError(SpeechCortexError):
     """
     Exception raised when there are issues with the API key.
     """
@@ -151,16 +151,16 @@ class ZeusApiKeyError(ZeusError):
         super().__init__(message)
 
 
-class ZeusConnectionError(ZeusError):
+class SpeechCortexConnectionError(SpeechCortexError):
     """
-    Exception raised when connection to Zeus API fails.
+    Exception raised when connection to SpeechCortex API fails.
     """
 
     def __init__(self, message: str):
         super().__init__(message)
 
 
-class ZeusTimeoutError(ZeusError):
+class SpeechCortexTimeoutError(SpeechCortexError):
     """
     Exception raised when a request times out.
     """
@@ -169,7 +169,7 @@ class ZeusTimeoutError(ZeusError):
         super().__init__(message)
 
 
-class ZeusWebSocketError(ZeusError):
+class SpeechCortexWebSocketError(SpeechCortexError):
     """
     Exception raised for WebSocket-specific errors.
     

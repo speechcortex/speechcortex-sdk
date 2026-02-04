@@ -1,4 +1,4 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -11,8 +11,8 @@ from typing import Dict, Optional, Callable, Any
 from urllib.parse import urlencode
 
 from ....utils import verboselogs
-from ....options import ZeusClientOptions
-from ....errors import ZeusError, ZeusWebSocketError
+from ....options import SpeechCortexClientOptions
+from ....errors import SpeechCortexError, SpeechCortexWebSocketError
 from ..enums import LiveTranscriptionEvents
 from .response import (
     OpenResponse,
@@ -29,14 +29,14 @@ from .options import RealtimeOptions
 
 class RealtimeClient:
     """
-    WebSocket client for Zeus real-time transcription.
+    WebSocket client for SpeechCortex real-time transcription.
     
-    This client handles WebSocket connections to the Zeus API for live audio transcription.
+    This client handles WebSocket connections to the SpeechCortex API for live audio transcription.
     """
 
-    def __init__(self, config: ZeusClientOptions):
+    def __init__(self, config: SpeechCortexClientOptions):
         if config is None:
-            raise ZeusError("Config is required")
+            raise SpeechCortexError("Config is required")
 
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
@@ -90,7 +90,7 @@ class RealtimeClient:
             options = RealtimeOptions()
 
         if not options.check():
-            raise ZeusError("Invalid LiveOptions")
+            raise SpeechCortexError("Invalid LiveOptions")
 
         try:
             # Build WebSocket URL

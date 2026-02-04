@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 """
-Real-time speech transcription from audio file using Zeus SDK.
+Real-time speech transcription from audio file using SpeechCortex SDK.
 
 This example demonstrates:
-1. Connecting to Zeus WebSocket API
+1. Connecting to SpeechCortex WebSocket API
 2. Streaming audio from a WAV file
 3. Receiving real-time transcription results
 4. Handling different event types
@@ -23,8 +23,8 @@ import argparse
 # Add parent directory to path for local development
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from zeus import (
-    ZeusClient,
+from speechcortex import (
+    SpeechCortexClient,
     TranscriptionEvents,
     RealtimeOptions,
 )
@@ -41,7 +41,7 @@ class AudioFileStreamer:
         
         Args:
             file_path: Path to the WAV file
-            connection: Zeus WebSocket connection
+            connection: SpeechCortex WebSocket connection
             chunk_size: Number of frames to send per chunk (default: 160 = 10ms at 16kHz)
         """
         self.file_path = file_path
@@ -117,7 +117,7 @@ class AudioFileStreamer:
 
 def parse_args():
     default_wav = os.path.abspath(os.path.join(os.path.dirname(__file__), "../en_30.wav"))
-    parser = argparse.ArgumentParser(description="Stream a WAV file to Zeus realtime transcription")
+    parser = argparse.ArgumentParser(description="Stream a WAV file to SpeechCortex realtime transcription")
     parser.add_argument("file", nargs="?", default=default_wav, help="Path to WAV file (default: examples/en_30.wav)")
     parser.add_argument("--chunk-size", type=int, default=160, help="Frames per chunk (default 160 ≈10ms at 16kHz)")
     parser.add_argument("--model", default="zeus-v1", help="Model name (default: zeus-v1)")
@@ -138,8 +138,8 @@ def main():
     all_finals = []
 
     try:
-        zeus = ZeusClient()
-        connection = zeus.transcribe.realtime()
+        speechcortex = SpeechCortexClient()
+        connection = speechcortex.transcribe.realtime()
 
         # Event handlers
         def on_open(self, open, **kwargs):
@@ -170,7 +170,7 @@ def main():
 
         def on_close(self, close, **kwargs):
             if close.code:
-                from zeus import WebSocketStatusCode
+                from speechcortex import WebSocketStatusCode
                 print(f"\n✓ WebSocket connection closed")
                 print(f"   Code: {close.code} - {WebSocketStatusCode.get_description(close.code)}")
                 if close.reason:
@@ -180,7 +180,7 @@ def main():
 
         def on_error(self, error, **kwargs):
             if getattr(error, "code", None):
-                from zeus import WebSocketStatusCode
+                from speechcortex import WebSocketStatusCode
                 print(f"\n❌ Error: {error.message}")
                 print(f"   Code: {error.code} - {WebSocketStatusCode.get_description(error.code)}")
             else:
@@ -212,7 +212,7 @@ def main():
         )
 
         print("\n" + "=" * 60)
-        print("🎙️  Zeus Real-Time Transcription - File Streaming")
+        print("🎙️  SpeechCortex Real-Time Transcription - File Streaming")
         print("=" * 60)
         print(f"\n📁 Audio file: {audio_file}")
 

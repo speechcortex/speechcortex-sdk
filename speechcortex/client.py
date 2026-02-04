@@ -1,18 +1,18 @@
-# Copyright 2024 Zeus SDK contributors. All Rights Reserved.
+# Copyright 2024 SpeechCortex SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
 from typing import Optional
 
-from .options import ZeusClientOptions, ClientOptionsFromEnv
-from .errors import ZeusError, ZeusApiKeyError
+from .options import SpeechCortexClientOptions
+from .errors import SpeechCortexError, SpeechCortexApiKeyError
 from .clients.transcribe import RealtimeClient
 
 
 class TranscribeRouter:
     """Router for transcription services"""
     
-    def __init__(self, config: ZeusClientOptions):
+    def __init__(self, config: SpeechCortexClientOptions):
         self._config = config
         self._realtime_client: Optional[RealtimeClient] = None
 
@@ -45,17 +45,17 @@ class _LegacyListenRouter:
         self.websocket = _LegacyWebsocket(transcribe_router.realtime)
 
 
-class ZeusClient:
+class SpeechCortexClient:
     """
-    Main Zeus SDK client for speech recognition services.
+    Main SpeechCortex SDK client for speech recognition services.
     
-    This is the primary entry point for the Zeus SDK. It provides access to
+    This is the primary entry point for the SpeechCortex SDK. It provides access to
     real-time speech recognition via WebSocket.
     
     Example:
-        >>> from zeus import ZeusClient, RealtimeOptions, TranscriptionEvents
+        >>> from speechcortex import SpeechCortexClient, RealtimeOptions, TranscriptionEvents
         >>> 
-        >>> client = ZeusClient(api_key="your_api_key")
+        >>> client = SpeechCortexClient(api_key="your_api_key")
         >>> connection = client.transcribe.realtime()
         >>> 
         >>> def on_message(self, result, **kwargs):
@@ -70,23 +70,20 @@ class ZeusClient:
     def __init__(
         self,
         api_key: str = "",
-        config: Optional[ZeusClientOptions] = None,
+        config: Optional[SpeechCortexClientOptions] = None,
     ):
         """
-        Initialize the Zeus client.
+        Initialize the SpeechCortex client.
         
         Args:
-            api_key: Your Zeus API key. If not provided, will attempt to read
-                    from ZEUS_API_KEY environment variable.
-            config: Optional ZeusClientOptions for advanced configuration.
+            api_key: Your SpeechCortex API key. If not provided, will attempt to read
+                    from SPEECHCORTEX_API_KEY environment variable.
+            config: Optional SpeechCortexClientOptions for advanced configuration.
                    If provided, api_key parameter is ignored.
         """
         if config is None:
-            if api_key:
-                config = ZeusClientOptions(api_key=api_key)
-            else:
-                # Try to load from environment
-                config = ClientOptionsFromEnv()
+            # SpeechCortexClientOptions now automatically reads from environment
+            config = SpeechCortexClientOptions(api_key=api_key)
         
         self._config = config
         self._transcribe: Optional[TranscribeRouter] = None
@@ -113,4 +110,4 @@ class ZeusClient:
 
 
 # Alias for backwards compatibility
-Zeus = ZeusClient
+SpeechCortex = SpeechCortexClient
