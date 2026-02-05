@@ -49,8 +49,8 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/speechcortex-sdk-py.git
-cd speechcortex-sdk-py
+git clone https://github.com/YOUR_USERNAME/zeus-sdk-py.git
+cd zeus-sdk-py
 
 # Create a virtual environment
 python -m venv venv
@@ -138,7 +138,7 @@ pylint speechcortex/
 ## Project Structure
 
 ```
-speechcortex-sdk-py/
+zeus-sdk-py/
 ├── speechcortex/                  # Main package
 │   ├── __init__.py       # Package initialization
 │   ├── client.py         # Main client implementation

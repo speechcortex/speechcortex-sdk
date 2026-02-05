@@ -1,6 +1,6 @@
 # SpeechCortex Python SDK
 
-[![CI](https://github.com/skanda-observeai/speechcortex-sdk-py/actions/workflows/ci.yml/badge.svg)](https://github.com/skanda-observeai/speechcortex-sdk-py/actions/workflows/ci.yml)
+[![CI](https://github.com/skanda-observeai/zeus-sdk-py/actions/workflows/ci.yml/badge.svg)](https://github.com/skanda-observeai/zeus-sdk-py/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/speechcortex-sdk.svg)](https://badge.fury.io/py/speechcortex-sdk)
 [![Python Versions](https://img.shields.io/pypi/pyversions/speechcortex-sdk.svg)](https://pypi.org/project/speechcortex-sdk/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -22,7 +22,7 @@ Official Python SDK for SpeechCortex ASR (Automatic Speech Recognition) platform
 ## Installation
 
 ```bash
-pip install "git+https://github.com/skanda-observeai/speechcortex-sdk-py.git@package_init"
+pip install "git+https://github.com/skanda-observeai/zeus-sdk-py.git@package_init"
 ```
 
 ```bash
