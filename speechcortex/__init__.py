@@ -8,7 +8,7 @@ SpeechCortex Python SDK
 Official Python SDK for SpeechCortex ASR (Automatic Speech Recognition) platform.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # Core client
 from .client import SpeechCortexClient, SpeechCortex, TranscribeRouter

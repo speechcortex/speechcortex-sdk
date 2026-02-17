@@ -15,7 +15,7 @@ DESCRIPTION = "The official Python SDK for SpeechCortex ASR platform."
 
 setup(
     name="speechcortex-sdk",
-    version="0.1.0",
+    version="0.1.1",
     author="SpeechCortex Team",
     author_email="team@speechcortex.com",
     url="https://github.com/speechcortex/speechcortex-sdk",

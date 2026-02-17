@@ -173,8 +173,8 @@ Releases are handled by maintainers:
 
 1. Update version in `speechcortex/__init__.py`, `setup.py`, and `pyproject.toml`
 2. Update `CHANGELOG.md` with release notes
-3. Create a git tag: `git tag -a v0.1.0 -m "Release v0.1.0"`
-4. Push tag: `git push origin v0.1.0`
+3. Create a git tag: `git tag -a v0.1.1 -m "Release v0.1.1"`
+4. Push tag: `git push origin v0.1.1`
 5. GitHub Actions will automatically publish to PyPI
 
 ## Questions?
