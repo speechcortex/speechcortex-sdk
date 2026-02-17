@@ -37,5 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples for common use cases
 - API documentation in code
 
-[Unreleased]: https://github.com/skanda-observeai/zeus-sdk-py/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/skanda-observeai/zeus-sdk-py/releases/tag/v0.1.0
+[Unreleased]: https://github.com/speechcortex/speechcortex-sdk/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/speechcortex/speechcortex-sdk/releases/tag/v0.1.0
