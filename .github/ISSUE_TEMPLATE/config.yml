@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question or Discussion
-    url: https://github.com/skanda-observeai/zeus-sdk-py/discussions
+    url: https://github.com/speechcortex/speechcortex-sdk/discussions
     about: Ask questions and discuss with the community
   - name: Documentation
-    url: https://github.com/skanda-observeai/zeus-sdk-py#readme
+    url: https://github.com/speechcortex/speechcortex-sdk#readme
     about: Check the documentation for help

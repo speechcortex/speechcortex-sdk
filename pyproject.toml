@@ -36,10 +36,10 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/skanda-observeai/zeus-sdk-py"
-"Bug Tracker" = "https://github.com/skanda-observeai/zeus-sdk-py/issues"
-"Source Code" = "https://github.com/skanda-observeai/zeus-sdk-py"
-"Documentation" = "https://github.com/skanda-observeai/zeus-sdk-py#readme"
+"Homepage" = "https://github.com/speechcortex/speechcortex-sdk"
+"Bug Tracker" = "https://github.com/speechcortex/speechcortex-sdk/issues"
+"Source Code" = "https://github.com/speechcortex/speechcortex-sdk"
+"Documentation" = "https://github.com/speechcortex/speechcortex-sdk#readme"
 
 ######
 # poetry configuration (optional)
