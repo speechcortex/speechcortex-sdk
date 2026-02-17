@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions workflows for CI/CD
 - Package publishing automation
 
-## [0.1.0] - 2024-12-22
+## [0.1.1] - 2024-12-22
 
 ### Added
 - Real-time speech recognition via WebSocket
@@ -37,5 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples for common use cases
 - API documentation in code
 
-[Unreleased]: https://github.com/speechcortex/speechcortex-sdk/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/speechcortex/speechcortex-sdk/releases/tag/v0.1.0
+[Unreleased]: https://github.com/speechcortex/speechcortex-sdk/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/speechcortex/speechcortex-sdk/releases/tag/v0.1.1

@@ -15,7 +15,7 @@ from .errors import SpeechCortexApiKeyError
 try:
     from . import __version__
 except ImportError:
-    __version__ = "0.1.0"
+    __version__ = "0.1.1"
 
 
 class SpeechCortexClientOptions:  # pylint: disable=too-many-instance-attributes
