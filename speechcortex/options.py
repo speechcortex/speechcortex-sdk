@@ -57,7 +57,13 @@ class SpeechCortexClientOptions:  # pylint: disable=too-many-instance-attributes
             api_key = os.getenv("SPEECHCORTEX_API_KEY", "")
 
         if url == "":
-            url = os.getenv("SPEECHCORTEX_HOST", "wss://rt-zeus-mldev.internalobserve.com")
+            url = os.getenv("SPEECHCORTEX_HOST", "")
+        
+        # URL is required
+        if not url:
+            raise SpeechCortexApiKeyError(
+                "SpeechCortex URL is required. Set SPEECHCORTEX_HOST environment variable or pass url parameter."
+            )
 
         if verbose == verboselogs.WARNING:
             _loglevel = os.getenv("SPEECHCORTEX_LOGGING", "")

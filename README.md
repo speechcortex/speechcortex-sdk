@@ -26,8 +26,8 @@ pip install "git+https://github.com/skanda-observeai/zeus-sdk-py.git@package_ini
 ```
 
 ```bash
-export SPEECHCORTEX_API_KEY=XXXXXXXXX
-export SPEECHCORTEX_HOST=wss://rt-zeus-mldev.internalobserve.com
+export SPEECHCORTEX_API_KEY=your_api_key_here
+export SPEECHCORTEX_HOST=wss://api.speechcortex.com
 ```
 
 ## Quick Start
