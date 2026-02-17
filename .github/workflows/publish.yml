@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/zeus-sdk
+      url: https://test.pypi.org/p/speechcortex-sdk
 
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/zeus-sdk
+      url: https://pypi.org/p/speechcortex-sdk
 
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
