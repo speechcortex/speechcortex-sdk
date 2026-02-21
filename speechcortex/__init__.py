@@ -46,6 +46,18 @@ from .clients.transcribe import (
     Alternative,
     Channel,
     Word,
+    # Batch transcription
+    BatchClient,
+    BatchOptions,
+    TranscriptionConfig,
+    JobDetails,
+    TranscriptionResult,
+    TranscriptionStatus,
+    BatchError,
+    JobNotFoundError,
+    JobFailedError,
+    TranscriptionNotReadyError,
+    BatchTimeoutError,
 )
 
 # Audio utilities
@@ -105,6 +117,18 @@ __all__ = [
     "Alternative",
     "Channel",
     "Word",
+    # Batch transcription
+    "BatchClient",
+    "BatchOptions",
+    "TranscriptionConfig",
+    "JobDetails",
+    "TranscriptionResult",
+    "TranscriptionStatus",
+    "BatchError",
+    "JobNotFoundError",
+    "JobFailedError",
+    "TranscriptionNotReadyError",
+    "BatchTimeoutError",
     # Audio
     "Microphone",
     "SpeechCortexMicrophoneError",

@@ -19,6 +19,19 @@ from .realtime import (
     Channel,
     Word,
 )
+from .batch import (
+    BatchClient,
+    BatchOptions,
+    TranscriptionConfig,
+    JobDetails,
+    TranscriptionResult,
+    TranscriptionStatus,
+    BatchError,
+    JobNotFoundError,
+    JobFailedError,
+    TranscriptionNotReadyError,
+    BatchTimeoutError,
+)
 
 __all__ = [
     "LiveTranscriptionEvents",
@@ -36,4 +49,16 @@ __all__ = [
     "Alternative",
     "Channel",
     "Word",
+    # Batch transcription
+    "BatchClient",
+    "BatchOptions",
+    "TranscriptionConfig",
+    "JobDetails",
+    "TranscriptionResult",
+    "TranscriptionStatus",
+    "BatchError",
+    "JobNotFoundError",
+    "JobFailedError",
+    "TranscriptionNotReadyError",
+    "BatchTimeoutError",
 ]

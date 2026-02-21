@@ -44,6 +44,7 @@ class SpeechCortexClientOptions:  # pylint: disable=too-many-instance-attributes
         headers: Optional[Dict] = None,
         options: Optional[Dict] = None,
         realtime_path: str = "/transcribe/realtime",
+        batch_path: str = "/api/v1/transcription",
     ):
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
@@ -114,6 +115,7 @@ class SpeechCortexClientOptions:  # pylint: disable=too-many-instance-attributes
                     break
 
         self.options = options
+        self.batch_path = batch_path
 
         # Normalize realtime path (ensure starts with '/'; strip trailing '?')
         if realtime_path is None or realtime_path == "":

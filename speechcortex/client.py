@@ -6,7 +6,7 @@ from typing import Optional
 
 from .options import SpeechCortexClientOptions
 from .errors import SpeechCortexError, SpeechCortexApiKeyError
-from .clients.transcribe import RealtimeClient
+from .clients.transcribe import RealtimeClient, BatchClient
 
 
 class TranscribeRouter:
@@ -15,6 +15,7 @@ class TranscribeRouter:
     def __init__(self, config: SpeechCortexClientOptions):
         self._config = config
         self._realtime_client: Optional[RealtimeClient] = None
+        self._batch_client: Optional[BatchClient] = None
 
     def realtime(self) -> RealtimeClient:
         """
@@ -26,6 +27,17 @@ class TranscribeRouter:
         if self._realtime_client is None:
             self._realtime_client = RealtimeClient(self._config)
         return self._realtime_client
+    
+    def batch(self) -> BatchClient:
+        """
+        Get a batch/post-call transcription client.
+        
+        Returns:
+            BatchClient instance for batch transcription
+        """
+        if self._batch_client is None:
+            self._batch_client = BatchClient(self._config)
+        return self._batch_client
 
 
 class _LegacyWebsocket:
@@ -95,7 +107,14 @@ class SpeechCortexClient:
         Access transcription services.
         
         Returns:
-            TranscribeRouter for accessing real-time and batch transcription
+            TranscribeRouter for accessing real-time and batch transcription.
+            
+        Example:
+            >>> # Real-time transcription
+            >>> client.transcribe.realtime()
+            >>> 
+            >>> # Batch/post-call transcription
+            >>> client.transcribe.batch()
         """
         if self._transcribe is None:
             self._transcribe = TranscribeRouter(self._config)
