@@ -22,6 +22,9 @@ class RealtimeOptions:
         channels: Number of audio channels
         utterance_end_ms: Milliseconds of silence for utterance end detection
         vad_events: Enable voice activity detection events
+        extras: Additional query parameters to pass through as-is. Use this to
+            forward new API features without SDK changes, e.g.
+            ``extras={"new_feature": "value", "flag": True}``
     """
     
     model: Optional[str] = "zeus-v1"
@@ -34,11 +37,12 @@ class RealtimeOptions:
     channels: Optional[int] = 1
     utterance_end_ms: Optional[int] = 1000
     vad_events: bool = False
-    
+    extras: Dict[str, Any] = field(default_factory=dict)
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert options to dictionary for API request"""
         params = {}
-        
+
         if self.model:
             params["model"] = self.model
         if self.language:
@@ -59,7 +63,12 @@ class RealtimeOptions:
             params["utterance_end_ms"] = str(self.utterance_end_ms)
         if self.vad_events:
             params["vad_events"] = "true"
-            
+
+        # Merge any extra options, converting values to strings for query params
+        for key, value in self.extras.items():
+            if value is not None:
+                params[key] = str(value) if not isinstance(value, bool) else str(value).lower()
+
         return params
     
     def check(self) -> bool:
