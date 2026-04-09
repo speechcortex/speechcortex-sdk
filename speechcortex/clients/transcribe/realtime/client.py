@@ -5,7 +5,15 @@
 import json
 import logging
 import threading
-import websockets
+import websockets  # Always import for type hints and exceptions
+try:
+    # Try newer websockets API (>= 14) which uses additional_headers
+    from websockets.asyncio.client import connect as ws_connect
+    _WS_HEADER_PARAM = "additional_headers"
+except ImportError:
+    # Fall back to older API (< 14) which uses extra_headers
+    ws_connect = websockets.connect
+    _WS_HEADER_PARAM = "extra_headers"
 import asyncio
 from typing import Dict, Optional, Callable, Any
 from urllib.parse import urlencode
@@ -136,7 +144,7 @@ class RealtimeClient:
             # Use headers from config (which already includes proper auth)
             headers = self._config.headers.copy() if self._config.headers else {}
 
-            async with websockets.connect(url, additional_headers=headers) as websocket:
+            async with ws_connect(url, **{_WS_HEADER_PARAM: headers}) as websocket:
                 self._websocket = websocket
                 self._logger.notice("WebSocket connected")
 
