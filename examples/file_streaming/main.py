@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 from speechcortex import (
     SpeechCortexClient,
+    SpeechCortexClientOptions,
     TranscriptionEvents,
     RealtimeOptions,
 )
@@ -120,7 +121,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Stream a WAV file to SpeechCortex realtime transcription")
     parser.add_argument("file", nargs="?", default=default_wav, help="Path to WAV file (default: examples/en_30.wav)")
     parser.add_argument("--chunk-size", type=int, default=160, help="Frames per chunk (default 160 ≈10ms at 16kHz)")
-    parser.add_argument("--model", default="zeus-v1", help="Model name (default: zeus-v1)")
+    parser.add_argument("--model", default="cove", help="Model name (default: cove)")
     parser.add_argument("--language", default="en-US", help="Language (default: en-US)")
     parser.add_argument("--utterance-end-ms", type=int, default=1000, help="Silence ms to end utterance (default 1000)")
     return parser.parse_args()
@@ -138,7 +139,12 @@ def main():
     all_finals = []
 
     try:
-        speechcortex = SpeechCortexClient()
+        options = SpeechCortexClientOptions(
+            api_key="<API_KEY>",
+            url="wss://api.speechcortex.ai",
+            verbose=1
+        )
+        speechcortex = SpeechCortexClient(config=options)
         connection = speechcortex.transcribe.realtime()
 
         # Event handlers
@@ -147,6 +153,10 @@ def main():
 
         def on_message(self, result, **kwargs):
             sentence = result.channel.alternatives[0].transcript
+            start_of_turn = result.start_of_turn
+            end_of_turn = result.end_of_turn
+            print(f"start_of_turn: {start_of_turn}")
+            print(f"end_of_turn: {end_of_turn}")
             if not sentence:
                 return
             if result.is_final:
@@ -207,6 +217,9 @@ def main():
             channels=1,
             sample_rate=16000,
             interim_results=True,
+            turn_detection=True,
+            turn_detection_threshold=0.65,
+            bg_speech_filter=False,
             utterance_end_ms=args.utterance_end_ms,
             vad_events=True,
         )
