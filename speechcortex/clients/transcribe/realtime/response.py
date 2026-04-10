@@ -68,6 +68,12 @@ class Alternative:
     confidence: float = 0.0
     words: List[Word] = field(default_factory=list)
 
+@dataclass_json
+@dataclass
+class TurnInfo:
+    event: bool = False
+    confidence: float = 0.0
+    timestamp: Optional[float] = None
 
 @dataclass_json
 @dataclass
@@ -96,6 +102,8 @@ class LiveResultResponse(BaseResponse):
     is_final: bool = False
     speech_final: bool = False
     channel_index: List[int] = field(default_factory=list)
+    start_of_turn: TurnInfo = field(default_factory=TurnInfo)
+    end_of_turn: TurnInfo = field(default_factory=TurnInfo)
     metadata: Optional[Metadata] = None
 
 

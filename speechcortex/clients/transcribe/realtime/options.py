@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from dataclasses import dataclass, field
-from typing import Optional, Dict, Any
+from typing import Literal, Optional, Dict, Any
 
 
 @dataclass
@@ -29,6 +29,9 @@ class RealtimeOptions:
     smart_format: bool = False
     punctuate: bool = False
     interim_results: bool = True
+    turn_detection: Optional[bool] = False
+    turn_detection_threshold: Optional[float] = 0.6
+    bg_speech_filter: Optional[Literal[False, "minimal", "balanced", "aggressive"]] = False
     encoding: Optional[str] = "linear16"
     sample_rate: Optional[int] = 16000
     channels: Optional[int] = 1
@@ -49,6 +52,12 @@ class RealtimeOptions:
             params["punctuate"] = "true"
         if self.interim_results:
             params["interim_results"] = "true"
+        if self.turn_detection:
+            params["turn_detection"] = "true"
+            if self.turn_detection_threshold:
+                params["turn_detection_threshold"] = str(self.turn_detection_threshold)
+        if self.bg_speech_filter:
+            params["bg_speech_filter"] = self.bg_speech_filter if self.bg_speech_filter else "false"
         if self.encoding:
             params["encoding"] = self.encoding
         if self.sample_rate:
