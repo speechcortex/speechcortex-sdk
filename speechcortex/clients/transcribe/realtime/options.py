@@ -34,6 +34,7 @@ class RealtimeOptions:
     interim_results: bool = True
     turn_detection: Optional[bool] = False
     turn_detection_threshold: Optional[float] = 0.6
+    turn_detection_timeout_ms: Optional[int] = 2000
     bg_speech_filter: Optional[Literal[False, "minimal", "balanced", "aggressive"]] = False
     encoding: Optional[str] = "linear16"
     sample_rate: Optional[int] = 16000
@@ -60,6 +61,8 @@ class RealtimeOptions:
             params["turn_detection"] = "true"
             if self.turn_detection_threshold:
                 params["turn_detection_threshold"] = str(self.turn_detection_threshold)
+            if self.turn_detection_timeout_ms:
+                params["turn_detection_timeout_ms"] = self.turn_detection_timeout_ms
         if self.bg_speech_filter:
             params["bg_speech_filter"] = self.bg_speech_filter if self.bg_speech_filter else "false"
         if self.encoding:
