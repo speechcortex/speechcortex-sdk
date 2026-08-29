@@ -2,131 +2,181 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import Optional
+"""
+SpeechCortex SDK client entry points.
 
-from .options import SpeechCortexClientOptions
-from .errors import SpeechCortexError, SpeechCortexApiKeyError
-from .clients.transcribe import RealtimeClient, BatchClient
+Usage::
+
+    from speechcortex import SpeechCortexClient
+
+    client = SpeechCortexClient(api_key="...", url="wss://api.speechcortex.ai")
+    # streaming:  client.listen.v1.connect(...)
+    # batch:      client.listen.batch.v1.submit_job(...)
+"""
+
+from .core.client_options import ClientOptions
+from .errors import SpeechCortexError
+from .listen.batch.client import AsyncBatchV1Client, BatchV1Client
+from .listen.v1.client import AsyncRealtimeV1Client, RealtimeV1Client
 
 
-class TranscribeRouter:
-    """Router for transcription services"""
-    
-    def __init__(self, config: SpeechCortexClientOptions):
+class _ListenV1Router:
+    """Realtime transcription. Access via ``client.listen.v1``."""
+
+    def __init__(self, config: ClientOptions):
         self._config = config
-        self._realtime_client: Optional[RealtimeClient] = None
-        self._batch_client: Optional[BatchClient] = None
+        self._client: RealtimeV1Client | None = None
 
-    def realtime(self) -> RealtimeClient:
-        """
-        Get a real-time transcription client.
-        
-        Returns:
-            RealtimeClient instance for WebSocket-based live transcription
-        """
-        if self._realtime_client is None:
-            self._realtime_client = RealtimeClient(self._config)
-        return self._realtime_client
-    
-    def batch(self) -> BatchClient:
-        """
-        Get a batch/post-call transcription client.
-        
-        Returns:
-            BatchClient instance for batch transcription
-        """
-        if self._batch_client is None:
-            self._batch_client = BatchClient(self._config)
-        return self._batch_client
+    @property
+    def connect(self):
+        return self.client.connect
+
+    @property
+    def client(self) -> RealtimeV1Client:
+        if self._client is None:
+            self._client = RealtimeV1Client(config=self._config)
+        return self._client
 
 
-class _LegacyWebsocket:
-    """Backwards-compatible websocket router (listen.websocket.v("1"))"""
+class _AsyncListenV1Router:
+    """Realtime transcription (async). Access via ``client.listen.v1``."""
 
-    def __init__(self, realtime_factory):
-        self._realtime_factory = realtime_factory
+    def __init__(self, config: ClientOptions):
+        self._config = config
+        self._client: AsyncRealtimeV1Client | None = None
 
-    def v(self, version: str = "1") -> RealtimeClient:  # pylint: disable=unused-argument
-        return self._realtime_factory()
+    @property
+    def connect(self):
+        return self.client.connect
+
+    @property
+    def client(self) -> AsyncRealtimeV1Client:
+        if self._client is None:
+            self._client = AsyncRealtimeV1Client(config=self._config)
+        return self._client
 
 
-class _LegacyListenRouter:
-    """Backwards-compatible listen router mapping to transcribe.realtime"""
+class _ListenBatchRouter:
+    """Batch transcription jobs. Access via ``client.listen.batch.v1``."""
 
-    def __init__(self, transcribe_router: TranscribeRouter):
-        self.websocket = _LegacyWebsocket(transcribe_router.realtime)
+    def __init__(self, config: ClientOptions):
+        self._config = config
+        self._v1: BatchV1Client | None = None
+
+    @property
+    def v1(self) -> BatchV1Client:
+        if self._v1 is None:
+            self._v1 = BatchV1Client(config=self._config)
+        return self._v1
+
+
+class _AsyncListenBatchRouter:
+    def __init__(self, config: ClientOptions):
+        self._config = config
+        self._v1: AsyncBatchV1Client | None = None
+
+    @property
+    def v1(self) -> AsyncBatchV1Client:
+        if self._v1 is None:
+            self._v1 = AsyncBatchV1Client(config=self._config)
+        return self._v1
+
+
+class _ListenRouter:
+    """Namespace for speech-to-text. Access via ``client.listen``."""
+
+    def __init__(self, config: ClientOptions):
+        self._v1: _ListenV1Router | None = None
+        self._batch: _ListenBatchRouter | None = None
+        self._config = config
+
+    @property
+    def v1(self) -> _ListenV1Router:
+        if self._v1 is None:
+            self._v1 = _ListenV1Router(self._config)
+        return self._v1
+
+    @property
+    def batch(self) -> _ListenBatchRouter:
+        if self._batch is None:
+            self._batch = _ListenBatchRouter(self._config)
+        return self._batch
+
+
+class _AsyncListenRouter:
+    def __init__(self, config: ClientOptions):
+        self._v1: _AsyncListenV1Router | None = None
+        self._batch: _AsyncListenBatchRouter | None = None
+        self._config = config
+
+    @property
+    def v1(self) -> _AsyncListenV1Router:
+        if self._v1 is None:
+            self._v1 = _AsyncListenV1Router(self._config)
+        return self._v1
+
+    @property
+    def batch(self) -> _AsyncListenBatchRouter:
+        if self._batch is None:
+            self._batch = _AsyncListenBatchRouter(self._config)
+        return self._batch
 
 
 class SpeechCortexClient:
     """
-    Main SpeechCortex SDK client for speech recognition services.
-    
-    This is the primary entry point for the SpeechCortex SDK. It provides access to
-    real-time speech recognition via WebSocket.
-    
-    Example:
-        >>> from speechcortex import SpeechCortexClient, RealtimeOptions, TranscriptionEvents
-        >>> 
-        >>> client = SpeechCortexClient(api_key="your_api_key")
-        >>> connection = client.transcribe.realtime()
-        >>> 
-        >>> def on_message(self, result, **kwargs):
-        ...     print(result.channel.alternatives[0].transcript)
-        >>> 
-        >>> connection.on(TranscriptionEvents.Transcript, on_message)
-        >>> connection.start(RealtimeOptions(model="zeus-v1"))
-        >>> connection.send(audio_bytes)
-        >>> connection.finish()
+    SpeechCortex API client.
+
+    Args:
+        api_key: SpeechCortex API key. Defaults to the ``SPEECHCORTEX_API_KEY``
+            environment variable.
+        url: Base URL of the SpeechCortex API (e.g. ``wss://api.speechcortex.ai``).
+            Required — defaults to the ``SPEECHCORTEX_HOST`` environment variable.
+        config: Fully-specified :class:`ClientOptions`, as an alternative to
+            the individual keyword arguments.
     """
 
     def __init__(
         self,
         api_key: str = "",
-        config: Optional[SpeechCortexClientOptions] = None,
-    ):
-        """
-        Initialize the SpeechCortex client.
-        
-        Args:
-            api_key: Your SpeechCortex API key. If not provided, will attempt to read
-                    from SPEECHCORTEX_API_KEY environment variable.
-            config: Optional SpeechCortexClientOptions for advanced configuration.
-                   If provided, api_key parameter is ignored.
-        """
+        url: str = "",
+        config: ClientOptions | None = None,
+    ) -> None:
         if config is None:
-            # SpeechCortexClientOptions now automatically reads from environment
-            config = SpeechCortexClientOptions(api_key=api_key)
-        
+            config = ClientOptions(api_key=api_key, url=url)
+        elif api_key or url:
+            raise SpeechCortexError(
+                "Pass either config or individual options (api_key, url), not both."
+            )
         self._config = config
-        self._transcribe: Optional[TranscribeRouter] = None
-        self._listen: Optional[_LegacyListenRouter] = None
+        self._listen: _ListenRouter | None = None
 
     @property
-    def transcribe(self) -> TranscribeRouter:
-        """
-        Access transcription services.
-        
-        Returns:
-            TranscribeRouter for accessing real-time and batch transcription.
-            
-        Example:
-            >>> # Real-time transcription
-            >>> client.transcribe.realtime()
-            >>> 
-            >>> # Batch/post-call transcription
-            >>> client.transcribe.batch()
-        """
-        if self._transcribe is None:
-            self._transcribe = TranscribeRouter(self._config)
-        return self._transcribe
-
-    @property
-    def listen(self) -> _LegacyListenRouter:
-        """Backwards-compatible accessor for listen.websocket.v("1") API"""
+    def listen(self) -> _ListenRouter:
         if self._listen is None:
-            self._listen = _LegacyListenRouter(self.transcribe)
+            self._listen = _ListenRouter(self._config)
         return self._listen
 
 
-# Alias for backwards compatibility
-SpeechCortex = SpeechCortexClient
+class AsyncSpeechCortexClient:
+    """Async counterpart of :class:`SpeechCortexClient`."""
+
+    def __init__(
+        self,
+        api_key: str = "",
+        url: str = "",
+        config: ClientOptions | None = None,
+    ) -> None:
+        if config is None:
+            config = ClientOptions(api_key=api_key, url=url)
+        elif api_key or url:
+            raise SpeechCortexError(
+                "Pass either config or individual options (api_key, url), not both."
+            )
+        self._config = config
+        self._listen: _AsyncListenRouter | None = None
+
+    @property
+    def listen(self) -> _AsyncListenRouter:
+        if self._listen is None:
+            self._listen = _AsyncListenRouter(self._config)
+        return self._listen

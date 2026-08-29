@@ -1,37 +1,22 @@
-.PHONY: install install-dev test lint format clean build publish
-
-install:
-	pip install -r requirements.txt
-
-install-dev:
-	pip install -r requirements-dev.txt
-
-test:
-	pytest tests/ -v --cov=zeus --cov-report=html --cov-report=term
+.PHONY: lint format typecheck test coverage build clean
 
 lint:
-	pylint zeus/
-	mypy zeus/
+	ruff check speechcortex/ tests/
 
 format:
-	black zeus/ tests/ examples/
+	ruff format speechcortex/ tests/
+
+typecheck:
+	mypy speechcortex/
+
+test:
+	pytest
+
+coverage:
+	pytest --cov=speechcortex --cov-report=term-missing
+
+build:
+	python -m build
 
 clean:
-	rm -rf build/
-	rm -rf dist/
-	rm -rf *.egg-info
-	rm -rf .pytest_cache/
-	rm -rf .mypy_cache/
-	rm -rf htmlcov/
-	rm -rf .coverage
-	find . -type d -name __pycache__ -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
-
-build: clean
-	python setup.py sdist bdist_wheel
-
-publish: build
-	twine upload dist/*
-
-dev-install:
-	pip install -e .
+	rm -rf build/ dist/ *.egg-info speechcortex_sdk.egg-info/ .pytest_cache .mypy_cache .ruff_cache htmlcov/ .coverage coverage.xml
