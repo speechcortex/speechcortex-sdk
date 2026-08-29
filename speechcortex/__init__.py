@@ -6,119 +6,109 @@
 SpeechCortex Python SDK
 
 Official Python SDK for SpeechCortex ASR (Automatic Speech Recognition) platform.
+
+Usage::
+
+    from speechcortex import SpeechCortexClient, EventType
+
+    client = SpeechCortexClient(api_key="...", url="wss://api.speechcortex.ai")
+
+    with client.listen.v1.connect(model="cove") as connection:
+        connection.on(EventType.MESSAGE, on_message)
+        threading.Thread(target=connection.start_listening, daemon=True).start()
+        connection.send_media(audio_chunk)
 """
 
-__version__ = "0.1.2"
-
-# Core client
-from .client import SpeechCortexClient, SpeechCortex, TranscribeRouter
-from .options import SpeechCortexClientOptions
+# Helpers
+# Client
+from .client import (
+    AsyncSpeechCortexClient,
+    SpeechCortexClient,
+)
+from .core.api_error import ApiError
+from .core.client_options import ClientOptions
+from .core.events import EventType
+from .core.request_options import RequestOptions
 
 # Errors
 from .errors import (
-    WebSocketStatusCode,
-    SpeechCortexError,
-    SpeechCortexTypeError,
-    SpeechCortexModuleError,
-    SpeechCortexApiError,
-    SpeechCortexUnknownApiError,
+    BatchError,
+    BatchTimeoutError,
+    JobFailedError,
+    JobNotFoundError,
     SpeechCortexApiKeyError,
     SpeechCortexConnectionError,
+    SpeechCortexError,
     SpeechCortexTimeoutError,
-    SpeechCortexWebSocketError,
+    TranscriptionNotReadyError,
+    WebSocketStatusCode,
+)
+from .helpers import Microphone
+
+# Listen (batch transcription)
+from .listen.batch import (
+    AsyncBatchV1Client,
+    BatchV1Client,
+    JobDetails,
+    TranscriptionResult,
+    TranscriptionStatus,
 )
 
-# Transcribe client and options
-from .clients.transcribe import (
-    RealtimeClient,
-    RealtimeOptions,
-    LiveOptions,
-    LiveTranscriptionEvents,
-    LiveTranscriptionEvents as TranscriptionEvents,
-    OpenResponse,
-    CloseResponse,
+# Listen (realtime transcription)
+from .listen.v1 import (
+    AsyncRealtimeV1Client,
+    AsyncRealtimeV1SocketClient,
     ErrorResponse,
-    UnhandledResponse,
-    LiveResultResponse,
-    MetadataResponse,
-    SpeechStartedResponse,
-    UtteranceEndResponse,
-    Alternative,
-    Channel,
-    Word,
+    KeepAlive,
+    Metadata,
+    RealtimeV1Client,
+    RealtimeV1SocketClient,
+    Results,
+    SpeechStarted,
+    TurnInfo,
+    UtteranceEnd,
 )
-
-# Audio utilities
-from .audio import Microphone, SpeechCortexMicrophoneError
-
-# Logging
-from .utils import (
-    VerboseLogger,
-    NOTICE,
-    SPAM,
-    SUCCESS,
-    VERBOSE,
-    WARNING,
-    ERROR,
-    FATAL,
-    CRITICAL,
-    INFO,
-    DEBUG,
-    NOTSET,
-)
+from .version import __version__
 
 __all__ = [
-    # Version
     "__version__",
     # Client
+    "AsyncSpeechCortexClient",
     "SpeechCortexClient",
-    "SpeechCortex",
-    "TranscribeRouter",
-    # Options
-    "SpeechCortexClientOptions",
+    "ClientOptions",
+    "RequestOptions",
+    # Core
+    "ApiError",
+    "EventType",
     # Errors
-    "WebSocketStatusCode",
-    "SpeechCortexError",
-    "SpeechCortexTypeError",
-    "SpeechCortexModuleError",
-    "SpeechCortexApiError",
-    "SpeechCortexUnknownApiError",
+    "BatchError",
+    "BatchTimeoutError",
+    "JobFailedError",
+    "JobNotFoundError",
     "SpeechCortexApiKeyError",
     "SpeechCortexConnectionError",
+    "SpeechCortexError",
     "SpeechCortexTimeoutError",
-    "SpeechCortexWebSocketError",
-    # Transcribe
-    "RealtimeClient",
-    "RealtimeOptions",
-    "LiveOptions",
-    "LiveTranscriptionEvents",
-    "TranscriptionEvents",
-    # Responses
-    "OpenResponse",
-    "CloseResponse",
+    "TranscriptionNotReadyError",
+    "WebSocketStatusCode",
+    # Realtime
+    "AsyncRealtimeV1Client",
+    "AsyncRealtimeV1SocketClient",
+    "RealtimeV1Client",
+    "RealtimeV1SocketClient",
     "ErrorResponse",
-    "UnhandledResponse",
-    "LiveResultResponse",
-    "MetadataResponse",
-    "SpeechStartedResponse",
-    "UtteranceEndResponse",
-    "Alternative",
-    "Channel",
-    "Word",
-    # Audio
+    "KeepAlive",
+    "Metadata",
+    "Results",
+    "SpeechStarted",
+    "TurnInfo",
+    "UtteranceEnd",
+    # Batch
+    "AsyncBatchV1Client",
+    "BatchV1Client",
+    "JobDetails",
+    "TranscriptionResult",
+    "TranscriptionStatus",
+    # Helpers
     "Microphone",
-    "SpeechCortexMicrophoneError",
-    # Logging
-    "VerboseLogger",
-    "NOTICE",
-    "SPAM",
-    "SUCCESS",
-    "VERBOSE",
-    "WARNING",
-    "ERROR",
-    "FATAL",
-    "CRITICAL",
-    "INFO",
-    "DEBUG",
-    "NOTSET",
 ]

@@ -1,41 +1,54 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## 0.2.0 — 2026-08-29
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Deepgram-v7-style restructure of the SDK: context-manager `connect()`,
+individual keyword options, typed pydantic response models, sync + async
+twins, and a cleaned-up package layout.
 
-## [Unreleased]
+### Breaking changes
+
+The API namespace now follows Deepgram's listen/speak layout:
+`client.listen.v1` for realtime streaming, `client.listen.batch.v1` for batch
+jobs. A `client.speak` namespace (TTS) and `client.manage` (API keys/projects)
+will be added when those endpoints land. The websocket connect layer lives in
+`speechcortex.transport`, and user-facing helpers (`Microphone`) in
+`speechcortex.helpers`.
+
+| Old (0.1.x) | New (0.2.0) |
+|---|---|
+| `conn = client.transcribe.realtime(); conn.on(...); conn.start(RealtimeOptions(...)); conn.send(b); conn.finish()` | `with client.listen.v1.connect(...) as conn:` — context exit closes the connection |
+| `client.transcribe.batch()` (async) | `client.listen.batch.v1` (property); sync twin added |
+| `LiveTranscriptionEvents.Transcript/Metadata/...` with `(self, result=..., **kwargs)` handlers | `EventType.MESSAGE` with single-argument handlers; discriminate with `isinstance(message, Results)` |
+| `conn.send(data)` returning `bool` (silent `False` before connect) | `conn.send_media(data)` — raises if the socket is closed |
+| `conn.keep_alive()` + auto keep-alive thread | explicit `conn.send_keep_alive()`; no background threads |
+| `RealtimeOptions(...)` / `LiveOptions` / `extras=` | individual keyword arguments + `extra=` dict |
+| realtime `model` defaulted to `zeus-v1` | `model` defaults to `cove` |
+| `start_of_turn` always a default `TurnInfo()` | `start_of_turn`/`end_of_turn` are `None` when the server omits them — check before use |
+| dataclass_json response models | pydantic v2 models (unknown server fields preserved) |
+| `SpeechCortexApiError(message, status)` | `ApiError(status_code=..., headers=..., body=...)` with credential redaction |
+| `SpeechCortexClientOptions` | `ClientOptions` (same env vars) |
+| `client.listen.websocket.v("1")`, `SpeechCortex` alias, `TranscriptionEvents` alias | removed |
+| `BatchOptions` / `TranscriptionConfig` dataclasses | keyword arguments; `wait_for_completion(job_id, polling_interval=3.0, timeout=None)` |
+| `Unhandled` event | removed — unknown message types arrive on `MESSAGE` as raw dicts |
+| `SpeechCortexWebSocketError`, vendored `verboselogs`, `LiveTranscriptionEvents` | removed — std `logging` on the `speechcortex` logger |
+
+### Fixed
+
+- Booleans in query strings are now consistently lowercase (`"true"`/`"false"`); previously mixed with `"True"`.
+- Batch file uploads infer the multipart content type from the file extension instead of hardcoding `audio/mpeg`.
+- Version is single-sourced in `speechcortex/version.py` (was duplicated in three places).
+- Batch response parsing deduplicated; UUID/timestamp parsing via one pydantic validator.
 
 ### Added
-- Initial release preparation
-- GitHub Actions workflows for CI/CD
-- Package publishing automation
 
-## [0.1.1] - 2024-12-22
+- `AsyncSpeechCortexClient` and async twins for realtime and batch clients.
+- `RequestOptions` (`timeout`, `additional_headers`, `additional_query_parameters`) on every method.
+- Real test suite (`pytest`, in-process websocket server, respx-mocked batch endpoints).
+- `py.typed` (PEP 561) so type checkers use the SDK's annotations.
 
-### Added
-- Real-time speech recognition via WebSocket
-- Async/await support for modern Python applications
-- Event-driven architecture for handling transcription results
-- Microphone input support for live transcription
-- File streaming capabilities for pre-recorded audio
-- Concurrent streams support for multiple audio sources
-- Comprehensive error handling
-- Full type hints support
-- Examples for various use cases
+### Internal
 
-### Features
-- `SpeechCortexClient` - Main client for interacting with SpeechCortex ASR platform
-- `LiveTranscriptionEvents` - Event system for real-time transcription
-- `LiveOptions` - Configuration options for live transcription
-- Microphone integration with audio processing
-- WebSocket-based streaming ASR
-
-### Documentation
-- README with quick start guide
-- Examples for common use cases
-- API documentation in code
-
-[Unreleased]: https://github.com/speechcortex/speechcortex-sdk/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/speechcortex/speechcortex-sdk/releases/tag/v0.1.1
+- Realtime client no longer spawns a background thread/asyncio loop; sync twin uses `websockets.sync`, async twin uses `websockets.asyncio`.
+- Batch client uses `httpx` instead of aiohttp/aiofiles.
+- Auth header construction centralized; realtime keeps `Authorization: Basic`, batch keeps `X-API-Key` (server contract).
