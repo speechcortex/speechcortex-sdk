@@ -95,6 +95,18 @@ with client.listen.v1.connect(
 
     connection.send_keep_alive()
 # leaving the with-block closes the connection
+
+Control messages (same wire format as Deepgram):
+
+```python
+connection.send_finalize()       # flush buffered audio
+connection.send_finalize(Finalize(channel=0))  # optional per-channel
+connection.send_close_stream()   # end session gracefully
+connection.send_keep_alive()
+```
+
+On incoming ``Results``, check ``message.from_finalize`` when the server
+flushed audio in response to ``send_finalize()``.
 ```
 
 Async equivalent (`AsyncSpeechCortexClient` + `async with`) has the same shape;

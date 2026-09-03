@@ -5,7 +5,9 @@
 from .client import AsyncRealtimeV1Client, RealtimeV1Client
 from .socket_client import AsyncRealtimeV1SocketClient, RealtimeV1SocketClient
 from .types import (
+    CloseStream,
     ErrorResponse,
+    Finalize,
     KeepAlive,
     Metadata,
     Results,
@@ -19,7 +21,9 @@ __all__ = [
     "RealtimeV1Client",
     "AsyncRealtimeV1SocketClient",
     "RealtimeV1SocketClient",
+    "CloseStream",
     "ErrorResponse",
+    "Finalize",
     "KeepAlive",
     "Metadata",
     "Results",

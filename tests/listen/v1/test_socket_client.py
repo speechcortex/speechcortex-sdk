@@ -184,6 +184,62 @@ def test_send_keep_alive_reaches_server(ws_server):
     assert json.loads(received[0]) == {"type": "KeepAlive"}
 
 
+def test_send_finalize_reaches_server(ws_server):
+    received = []
+
+    async def handler(conn):
+        async for message in conn:
+            received.append(message)
+
+    server = ws_server(handler=handler)
+    with make_client(server).connect() as connection:
+        connection.send_finalize()
+        time.sleep(0.3)
+
+    assert json.loads(received[0]) == {"type": "Finalize"}
+
+
+def test_send_finalize_with_channel(ws_server):
+    received = []
+
+    async def handler(conn):
+        async for message in conn:
+            received.append(message)
+
+    server = ws_server(handler=handler)
+    with make_client(server).connect() as connection:
+        from speechcortex.listen.v1.types import Finalize
+
+        connection.send_finalize(Finalize(channel=0))
+        time.sleep(0.3)
+
+    assert json.loads(received[0]) == {"type": "Finalize", "channel": 0}
+
+
+def test_send_close_stream_reaches_server(ws_server):
+    received = []
+
+    async def handler(conn):
+        async for message in conn:
+            received.append(message)
+
+    server = ws_server(handler=handler)
+    with make_client(server).connect() as connection:
+        connection.send_close_stream()
+        time.sleep(0.3)
+
+    assert json.loads(received[0]) == {"type": "CloseStream"}
+
+
+def test_from_finalize_on_results(ws_server):
+    payload = {**RESULTS_PAYLOAD, "from_finalize": True}
+    server = ws_server(handler=lambda conn: _send_json(conn, payload))
+    events = collect_events(server)
+    result = [d for kind, d in events if kind == "MESSAGE"][0]
+    assert isinstance(result, Results)
+    assert result.from_finalize is True
+
+
 def test_async_start_listening_events(ws_server):
     server = ws_server(handler=_send_results)
     client = AsyncRealtimeV1Client(config=ClientOptions(api_key="k", url=server.url))

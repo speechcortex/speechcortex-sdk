@@ -8,7 +8,7 @@ import typing
 
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
-from .types import KeepAlive, RealtimeSocketResponse
+from .types import CloseStream, Finalize, KeepAlive, RealtimeSocketResponse
 
 _logger = logging.getLogger("speechcortex")
 
@@ -84,6 +84,14 @@ class AsyncRealtimeV1SocketClient(EventEmitterMixin):
         """Send a KeepAlive control message."""
         await self._send_model(message or KeepAlive())
 
+    async def send_finalize(self, message: Finalize | None = None) -> None:
+        """Send a Finalize control message to flush buffered audio."""
+        await self._send_model(message or Finalize())
+
+    async def send_close_stream(self, message: CloseStream | None = None) -> None:
+        """Send a CloseStream control message to end the session."""
+        await self._send_model(message or CloseStream())
+
     async def recv(self) -> typing.Any:
         """Receive a single message from the websocket connection."""
         data = await self._websocket.recv()
@@ -97,7 +105,7 @@ class AsyncRealtimeV1SocketClient(EventEmitterMixin):
         await self._websocket.send(data)
 
     async def _send_model(self, model: typing.Any) -> None:
-        await self._send(model.model_dump())
+        await self._send(model.model_dump(exclude_none=True))
 
 
 class RealtimeV1SocketClient(EventEmitterMixin):
@@ -161,6 +169,14 @@ class RealtimeV1SocketClient(EventEmitterMixin):
         """Send a KeepAlive control message."""
         self._send_model(message or KeepAlive())
 
+    def send_finalize(self, message: Finalize | None = None) -> None:
+        """Send a Finalize control message to flush buffered audio."""
+        self._send_model(message or Finalize())
+
+    def send_close_stream(self, message: CloseStream | None = None) -> None:
+        """Send a CloseStream control message to end the session."""
+        self._send_model(message or CloseStream())
+
     def recv(self) -> typing.Any:
         """Receive a single message from the websocket connection."""
         data = self._websocket.recv()
@@ -174,4 +190,4 @@ class RealtimeV1SocketClient(EventEmitterMixin):
         self._websocket.send(data)
 
     def _send_model(self, model: typing.Any) -> None:
-        self._send(model.model_dump())
+        self._send(model.model_dump(exclude_none=True))

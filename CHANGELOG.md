@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 — 2026-09-03
+
+### Added
+
+- `Finalize` and `CloseStream` control message models.
+- `send_finalize()` and `send_close_stream()` on sync/async realtime socket clients.
+- `Results.from_finalize` for finalize-flush responses (Deepgram parity).
+
 ## 0.2.0 — 2026-08-29
 
 Deepgram-v7-style restructure of the SDK: context-manager `connect()`,
