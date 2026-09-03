@@ -77,6 +77,7 @@ class Results(UncheckedBaseModel):
     start: float | None = None
     is_final: bool | None = None
     speech_final: bool | None = None
+    from_finalize: bool | None = None
     start_of_turn: TurnInfo | None = None
     end_of_turn: TurnInfo | None = None
     metadata: Metadata | None = None
@@ -112,6 +113,19 @@ class KeepAlive(UncheckedBaseModel):
     """Control message that keeps an idle websocket connection alive."""
 
     type: Literal["KeepAlive"] = "KeepAlive"
+
+
+class Finalize(UncheckedBaseModel):
+    """Control message that flushes buffered audio and returns final results."""
+
+    type: Literal["Finalize"] = "Finalize"
+    channel: int | None = None
+
+
+class CloseStream(UncheckedBaseModel):
+    """Control message that finalizes the stream and ends the session."""
+
+    type: Literal["CloseStream"] = "CloseStream"
 
 
 RealtimeSocketResponse = Results | Metadata | SpeechStarted | UtteranceEnd | ErrorResponse
